@@ -1,0 +1,18 @@
+**Text Message Instructions for Uploading Documents**
+
+Hello {first_name},
+
+To verify your Medicaid eligibility, please upload your income verification documents using the secure link below:
+
+🔗 [Upload Documents Here](https://upload.louisiana.gov)
+
+You may upload:
+- Last year's tax return
+- Most recent 2 pay stubs
+- Employer verification letter
+- Social Security benefit letter (if applicable)
+
+Please complete this within 10 days to avoid interruption in benefits.
+
+Thank you,
+Louisiana Medicaid Support (BenefitBridge AI)

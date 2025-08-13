@@ -1,11 +1,39 @@
-template_key,language,text
-opt_in_confirm,en,LDH Update: We received your contact info. Your renewal is due {due_date}. Reply HELP for assistance.
-opt_in_confirm,es,Actualización LDH: Recibimos su información de contacto. Su renovación vence el {due_date}. Responda AYUDA para asistencia.
-t_minus_14,en,Reminder: Your Medicaid renewal is due in 14 days. Need help? Reply HELP.
-t_minus_14,es,Recordatorio: Su renovación de Medicaid vence en 14 días. ¿Necesita ayuda? Responda AYUDA.
-t_minus_7,en,Heads-up: 7 days until your Medicaid renewal deadline. Reply DOCS for guidance.
-t_minus_7,es,Aviso: Faltan 7 días para su fecha límite de renovación. Responda DOCUMENTOS para ayuda.
-t_minus_3,en,3 days left to complete your Medicaid renewal. Reply HELP to talk with someone.
-t_minus_3,es,Quedan 3 días para completar su renovación de Medicaid. Responda AYUDA para hablar con alguien.
-t_minus_1,en,"Final reminder: Your renewal is due tomorrow. If submitted, you’re all set."
-t_minus_1,es,"Último recordatorio: Su renovación vence mañana. Si ya envió, todo está listo."
+template_key,language,channel,text,notes
+consent_request,en,SMS,"Hi {first_name}, Louisiana Medicaid (BenefitBridge). Reply YES to get texts about your renewal. Msg&data rates may apply. Reply STOP to opt out.",Initial opt-in request
+consent_confirm,en,SMS,"Thanks for opting in, {first_name}. We’ll send reminders about your Medicaid renewal. Reply HELP for help. Reply STOP to opt out.",Opt-in confirmation
+consent_request,es,SMS,"Hola {first_name}, Medicaid de Luisiana (BenefitBridge). Responda SI para recibir textos. Pueden aplicar cargos. Responda ALTO para cancelar.",Solicitud de consentimiento
+consent_confirm,es,SMS,"Gracias por aceptar, {first_name}. Enviaremos recordatorios de su renovación. Responda AYUDA para ayuda. ALTO para cancelar.",Confirmación de consentimiento
+otp_send,en,SMS,Your verification code is {code}. Do not share this code. Enter it in BenefitBridge to continue. Reply HELP for help.,Send OTP
+otp_reminder,en,SMS,Reminder: Use code {code} to verify your identity in BenefitBridge. Expires in {mins} min. Reply HELP for help.,OTP reminder
+otp_send,es,SMS,Su código de verificación es {code}. No lo comparta. Ingréselo en BenefitBridge. Responda AYUDA para ayuda.,Enviar código
+otp_reminder,es,SMS,Recordatorio: Use el código {code} para verificar su identidad. Expira en {mins} min. AYUDA para ayuda.,Recordatorio código
+contact_update_request,en,SMS,Update your contact info now to protect coverage: {link}. Takes ~2 min. Reply STOP to opt out.,Prompt to update
+contact_update_confirm,en,SMS,Thanks {first_name}. Your contact info was updated. Renewal due {due_date}. We’ll remind you. Reply HELP for help.,Confirmation after update
+contact_update_request,es,SMS,Actualice su información de contacto: {link}. Toma ~2 min. ALTO para cancelar.,Pedir actualización
+contact_update_confirm,es,SMS,Gracias {first_name}. Su información fue actualizada. Vence el {due_date}. Enviaremos recordatorios. AYUDA para ayuda.,Confirmación
+redet_t14,en,SMS,Reminder: Your Medicaid renewal is due in 14 days ({due_date}). Need help? {link} Reply HELP for help. STOP to opt out.,T-14 reminder
+redet_t7,en,SMS,Heads up: 7 days until your Medicaid renewal deadline ({due_date}). Start now: {link} Reply HELP for help.,T-7 reminder
+redet_t3,en,SMS,3 days left to finish your Medicaid renewal ({due_date}). Continue here: {link} Reply HELP for help.,T-3 reminder
+redet_t1,en,SMS,Final reminder: Your Medicaid renewal is due tomorrow ({due_date}). Finish here: {link} Reply HELP for help.,T-1 reminder
+redet_t14,es,SMS,Recordatorio: Su renovación vence en 14 días ({due_date}). Ayuda: {link} AYUDA para ayuda. ALTO para cancelar.,T-14
+redet_t7,es,SMS,Aviso: Faltan 7 días para su renovación ({due_date}). Empiece: {link} AYUDA para ayuda.,T-7
+redet_t3,es,SMS,Quedan 3 días para su renovación ({due_date}). Continúe: {link} AYUDA para ayuda.,T-3
+redet_t1,es,SMS,Último aviso: Su renovación vence mañana ({due_date}). Termine aquí: {link} AYUDA para ayuda.,T-1
+upload_instructions,en,SMS,"Upload income proof here: {upload_link} (tax return, 2 pay stubs, or employer letter). Need help? Reply HELP.",Upload instructions
+upload_received,en,SMS,"We received your document. If more is needed, we’ll text you. Thank you, {first_name}.",Receipt confirmation
+doc_incomplete,en,SMS,"We need another doc to verify income (e.g., 2 recent pay stubs). Upload: {upload_link} Reply HELP for help.",Ask for more docs
+upload_instructions,es,SMS,"Cargue su prueba de ingresos aquí: {upload_link} (declaración, 2 talones o carta del empleador). AYUDA para ayuda.",Instrucciones de carga
+upload_received,es,SMS,"Recibimos su documento. Si se necesita otro, le avisaremos. Gracias, {first_name}.",Confirmación
+doc_incomplete,es,SMS,"Necesitamos otro documento (ej., 2 talones recientes). Cargue: {upload_link} AYUDA para ayuda.",Pedir más docs
+caseworker_queue_confirm,en,SMS,We’ve added you to the caseworker callback list. Expect a call within 1–2 business days.,Queue confirmation
+caseworker_queue_confirm,es,SMS,La incluimos en la lista para que un agente le llame. Espere una llamada en 1–2 días hábiles.,Confirmación de cola
+unreachable_1,en,SMS,We’re trying to reach you about your Medicaid renewal. Update info here: {link}. Reply HELP for help.,First unreachable ping
+unreachable_2,en,SMS,We still need your update to protect coverage. Start here: {link}. You can also request a call. Reply HELP.,Second unreachable ping
+unreachable_1,es,SMS,Intentamos comunicarnos sobre su renovación. Actualice aquí: {link}. AYUDA para ayuda.,Primer intento
+unreachable_2,es,SMS,Aún necesitamos su actualización. Empiece aquí: {link}. También puede pedir una llamada. AYUDA.,Segundo intento
+success_final,en,SMS,"All set, {first_name}! Your renewal steps are complete. We’ll notify you if anything else is needed.",Final success
+success_final,es,SMS,"¡Listo, {first_name}! Sus pasos de renovación están completos. Le avisaremos si hace falta algo más.",Éxito final
+help_autoreply,en,SMS,"For help, visit {link} or reply CALL to request a caseworker call. STOP to opt out.",Auto-reply to HELP
+optout_ack,en,SMS,"You’re opted out and will no longer receive texts. To rejoin later, text START.",STOP confirmation
+help_autoreply,es,SMS,"Para ayuda, visite {link} o responda LLAMAR para hablar con un agente. ALTO para cancelar.",Respuesta a AYUDA
+optout_ack,es,SMS,"Ha cancelado suscripciones a mensajes. Para volver a unirse, escriba INICIAR.",Confirmación de ALTO

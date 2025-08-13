@@ -1,117 +1,62 @@
-
 import streamlit as st
 import pandas as pd
-from datetime import datetime, timedelta
 
-st.set_page_config(page_title="BenefitBridge AI Demo", layout="wide")
+# Load sample contacts
+contacts = pd.read_csv('sample_contacts_expanded.csv')
 
-@st.cache_data
-def load_data():
-    recipients = pd.read_csv("mock_recipients.csv", parse_dates=["redet_due_date"])
-    templates = pd.read_csv("sms_templates.csv")
-    return recipients, templates
+st.set_page_config(page_title="BenefitBridge AI", page_icon="🤝", layout="centered")
 
-recipients, templates = load_data()
+st.title("🤝 BenefitBridge AI")
+st.markdown("Your friendly Louisiana Medicaid assistant.")
 
-if "events" not in st.session_state:
-    st.session_state.events = []  # simple event log
+# Language selection
+language = st.selectbox("Select your preferred language:", 
+    ["English", "Spanish", "French", "Vietnamese", "Arabic", "Chinese", "Tagalog"])
 
-if "updates" not in st.session_state:
-    st.session_state.updates = pd.DataFrame(columns=[
-        "medicaid_id","name","updated_phone","updated_email","updated_address","ts","status"
-    ])
+# User name
+name = st.text_input("What name would you like to be called?")
 
-st.sidebar.title("BenefitBridge AI Demo")
-mode = st.sidebar.radio("Choose a demo:", ["Recipient Flow", "Caseworker Dashboard"])
+# Legal acknowledgment
+st.write("Please confirm by typing your full name below:")
+ack_name = st.text_input("Full Name Confirmation")
+if ack_name:
+    st.success("Acknowledgment received.")
 
-# -------------- Recipient Flow --------------
-if mode == "Recipient Flow":
-    st.title("BenefitBridge for Louisiana Medicaid")
-    st.write("Update your contact info in minutes to protect your coverage.")
+# Verification details
+st.subheader("Verification Information")
+first_name = st.text_input("First Name (Required)")
+last_name = st.text_input("Last Name (Required)")
+medicaid_id = st.text_input("Medicaid ID (Optional)")
+ssn_last4 = st.text_input("Last 4 of SSN (Required)")
+dob = st.date_input("Date of Birth (Required)")
 
-    lang = st.radio("Language / Idioma", ["English","Español"])
+# Mock verification step
+if st.button("Send Verification Code"):
+    st.info("A verification code has been sent to your mobile number on file. (Simulated)")
 
-    if lang == "Español":
-        st.subheader("Verificación de Identidad")
-        name = st.text_input("Nombre completo")
-        dob = st.date_input("Fecha de nacimiento")
-        med_id = st.text_input("ID de Medicaid (opcional)")
-    else:
-        st.subheader("Identity Verification")
-        name = st.text_input("Full name")
-        dob = st.date_input("Date of birth")
-        med_id = st.text_input("Medicaid ID (optional)")
+code_entered = st.text_input("Enter Verification Code")
 
-    if st.button("Find my record / Buscar mi registro"):
-        m = None
-        # Try med_id match first; fallback to name+dob
-        if med_id:
-            m = recipients[recipients["medicaid_id"] == med_id]
-        if m is None or m.empty:
-            # try name + dob string match
-            m = recipients[(recipients["name"].str.lower()==name.strip().lower())]
-        if m.empty:
-            st.error("No matching record found. Please check your info.")
-        else:
-            rec = m.iloc[0].copy()
-            st.success("Record found.")
-            st.write("**On file:**")
-            st.write(f"- Phone: {rec['phone']}  \n- Email: {rec['email']}  \n- Address: {rec['address_old']}")
-            st.info(f"Suggested new address (USPS): {rec['address_candidate']}")
-            st.session_state.current_rec = rec.to_dict()
+# Display current contact info (simulated)
+if st.button("Display Current Contact Info"):
+    st.write("Simulated current contact information from database...")
 
-    if "current_rec" in st.session_state:
-        rec = st.session_state.current_rec
-        st.subheader("Confirm or Update Contact Info")
+# Update contact info
+st.subheader("Update Contact Information")
+update_field = st.selectbox("What would you like to update?", 
+    ["Home Address", "Mailing Address", "Cell Phone Number", "Email Address", "Home Alternative Phone Number"])
 
-        new_phone = st.text_input("Phone", value=rec["phone"])
-        new_email = st.text_input("Email", value=rec["email"])
-        new_addr  = st.text_area("Address", value=rec["address_candidate"])
+st.text_input(f"New {update_field}")
 
-        sms_opt = st.checkbox("Get text reminders about my renewal")
-        due = pd.to_datetime(rec["redet_due_date"]).date()
-        st.write(f"**Your renewal is due on:** {due}")
+# Contact preferences
+contact_pref = st.radio("How do you want to be contacted in the future?", ["Text", "Email", "Phone Call"])
 
-        if st.button("Send Update to LDH"):
-            ts = datetime.utcnow().isoformat()
-            st.session_state.updates.loc[len(st.session_state.updates)] = [
-                rec["medicaid_id"], rec["name"], new_phone, new_email, new_addr, ts, "posted_200"
-            ]
-            st.session_state.events.append({"ts": ts, "type": "ldh_intake_posted", "medicaid_id": rec["medicaid_id"]})
-            if sms_opt:
-                st.session_state.events.append({"ts": ts, "type": "sms_opt_in", "medicaid_id": rec["medicaid_id"]})
-            st.success("LDH Update: Contact information submitted. You’ll receive reminders before your deadline.")
-            st.balloons()
+st.subheader("Income Verification")
+verify_now = st.radio("Would you like to verify your income now?", ["Yes", "Remind me later"])
 
-# -------------- Caseworker Dashboard --------------
+if verify_now == "Yes":
+    st.write("Please upload your income verification document:")
+    st.file_uploader("Upload File")
 else:
-    st.title("LDH Caseworker Dashboard")
+    st.write("We will send you a reminder with the list of acceptable documents.")
 
-    # compute KPIs
-    today = datetime.utcnow().date()
-    completed = len(st.session_state.updates)
-    at_risk = (recipients["redet_due_date"].dt.date - today).apply(lambda d: d.days <= 10).sum()
-    reach_rate = 0
-    # naive reach calc from events
-    sms_opts = [e for e in st.session_state.events if e["type"]=="sms_opt_in"]
-    attempts = max(len(st.session_state.events), 1)
-    reach_rate = round(100*len(sms_opts)/attempts, 1)
-
-    kpi1, kpi2, kpi3 = st.columns(3)
-    kpi1.metric("Today's Updates", completed)
-    kpi2.metric("At-risk (≤10 days)", at_risk)
-    kpi3.metric("Reach Rate (demo)", f"{reach_rate}%")
-
-    st.subheader("New / Updated")
-    st.dataframe(st.session_state.updates)
-
-    st.subheader("Need Attention")
-    # simple flags: missing phone or nearing deadline
-    rec_copy = recipients.copy()
-    rec_copy["days_to_due"] = (rec_copy["redet_due_date"].dt.date - today).apply(lambda d: d.days)
-    flags = rec_copy[(rec_copy["days_to_due"] <= 10) | (rec_copy["phone"].isna())][
-        ["medicaid_id","name","phone","email","address_old","redet_due_date","days_to_due","risk_score"]
-    ]
-    st.dataframe(flags)
-
-    st.caption("Demo only: data is mock and events are simulated in-session.")
+st.success("Demo completed. This is a simulation — no actual Medicaid data is accessed.")

@@ -1,0 +1,5 @@
+Hi {first_name}, this is BenefitBridge AI with Louisiana Medicaid. Please verify your contact information at https://benefitbridge.ai/verify
+Your Medicaid verification code is {code}. Enter this in the BenefitBridge AI chat to continue.
+Please upload your income verification documents using this secure link: https://upload.louisiana.gov
+Reminder: Please verify your Medicaid eligibility by uploading your documents within the next 5 days. https://upload.louisiana.gov
+Your Medicaid contact information has been updated successfully. Thank you for using BenefitBridge AI.
