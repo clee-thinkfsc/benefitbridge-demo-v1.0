@@ -1,62 +1,82 @@
 import streamlit as st
 import pandas as pd
+import json
+import os
 
-# Load sample contacts
-contacts = pd.read_csv('sample_contacts_expanded.csv')
-
-st.set_page_config(page_title="BenefitBridge AI", page_icon="🤝", layout="centered")
-
-st.title("🤝 BenefitBridge AI")
-st.markdown("Your friendly Louisiana Medicaid assistant.")
-
-# Language selection
-language = st.selectbox("Select your preferred language:", 
-    ["English", "Spanish", "French", "Vietnamese", "Arabic", "Chinese", "Tagalog"])
-
-# User name
-name = st.text_input("What name would you like to be called?")
-
-# Legal acknowledgment
-st.write("Please confirm by typing your full name below:")
-ack_name = st.text_input("Full Name Confirmation")
-if ack_name:
-    st.success("Acknowledgment received.")
-
-# Verification details
-st.subheader("Verification Information")
-first_name = st.text_input("First Name (Required)")
-last_name = st.text_input("Last Name (Required)")
-medicaid_id = st.text_input("Medicaid ID (Optional)")
-ssn_last4 = st.text_input("Last 4 of SSN (Required)")
-dob = st.date_input("Date of Birth (Required)")
-
-# Mock verification step
-if st.button("Send Verification Code"):
-    st.info("A verification code has been sent to your mobile number on file. (Simulated)")
-
-code_entered = st.text_input("Enter Verification Code")
-
-# Display current contact info (simulated)
-if st.button("Display Current Contact Info"):
-    st.write("Simulated current contact information from database...")
-
-# Update contact info
-st.subheader("Update Contact Information")
-update_field = st.selectbox("What would you like to update?", 
-    ["Home Address", "Mailing Address", "Cell Phone Number", "Email Address", "Home Alternative Phone Number"])
-
-st.text_input(f"New {update_field}")
-
-# Contact preferences
-contact_pref = st.radio("How do you want to be contacted in the future?", ["Text", "Email", "Phone Call"])
-
-st.subheader("Income Verification")
-verify_now = st.radio("Would you like to verify your income now?", ["Yes", "Remind me later"])
-
-if verify_now == "Yes":
-    st.write("Please upload your income verification document:")
-    st.file_uploader("Upload File")
+# Load contacts
+if os.path.exists("sample_contacts_expanded.csv"):
+    contacts = pd.read_csv("sample_contacts_expanded.csv")
 else:
-    st.write("We will send you a reminder with the list of acceptable documents.")
+    contacts = pd.DataFrame(columns=[
+        "First Name", "Last Name", "Medicaid ID", "SSN Last 4", "Date of Birth",
+        "Street", "City", "State", "Zip", "Mailing Street", "Mailing City",
+        "Mailing State", "Mailing Zip", "Cell Phone", "Email", "Alt Phone"
+    ])
 
-st.success("Demo completed. This is a simulation — no actual Medicaid data is accessed.")
+# Load locales
+if os.path.exists("locales.json"):
+    with open("locales.json", "r") as f:
+        locales = json.load(f)
+else:
+    locales = {"languages": ["English"]}
+
+# Session state for chatbot
+if "chat_history" not in st.session_state:
+    st.session_state.chat_history = []
+if "step" not in st.session_state:
+    st.session_state.step = 0
+if "form_data" not in st.session_state:
+    st.session_state.form_data = {}
+
+st.title("🤝 BenefitBridge AI Demo")
+st.markdown("A friendly Louisiana social worker chatbot helping with Medicaid contact updates & income verification.")
+
+# Display chat history
+for role, text in st.session_state.chat_history:
+    if role == "bot":
+        st.chat_message("assistant").write(text)
+    else:
+        st.chat_message("user").write(text)
+
+# Bot script flow
+script = [
+    "Hi! I'm your friendly Louisiana BenefitBridge assistant. Let's start by selecting your language.",
+    f"Available languages: {', '.join(locales['languages'])}. Please type your choice.",
+    "Great. What name would you like me to call you?",
+    "Please confirm by typing your full name that you give the Louisiana Dept. of Health permission to verify your information.",
+    "Enter your First Name:",
+    "Enter your Last Name:",
+    "Enter your Medicaid ID (optional):",
+    "Enter last 4 digits of your SSN:",
+    "Enter your Date of Birth (YYYY-MM-DD):",
+    "Please enter the verification code sent to your phone.",
+    "Here is your current contact information on file. What would you like to update? (home, mailing, phone, email)",
+    "Enter new Home Address Street:",
+    "Enter City:",
+    "Enter State:",
+    "Enter Zip:",
+    "Enter Mailing Address Street (or 'same'):",
+    "Enter Mailing City:",
+    "Enter Mailing State:",
+    "Enter Mailing Zip:",
+    "Enter Cell Phone:",
+    "Enter Email:",
+    "Enter Alternative Phone:",
+    "How would you like to be contacted in the future? (text, email, phone)",
+    "Would you like to verify your income now? (yes/no)",
+    "If yes: please upload your documents."
+]
+
+# Handle user input
+if user_input := st.chat_input("Type your message here..."):
+    st.session_state.chat_history.append(("user", user_input))
+    st.session_state.form_data[f"step_{st.session_state.step}"] = user_input
+
+    st.session_state.step += 1
+    if st.session_state.step < len(script):
+        bot_msg = script[st.session_state.step]
+    else:
+        bot_msg = "Thank you! Your updates have been submitted."
+
+    st.session_state.chat_history.append(("bot", bot_msg))
+    st.experimental_rerun()

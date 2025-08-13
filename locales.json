@@ -1,72 +1,11 @@
 {
-  "en": {
-    "app_title": "BenefitBridge for Louisiana Medicaid",
-    "persona_greeting": "Hi, I’m Bea—your friendly Louisiana Medicaid helper. I’ll guide you step-by-step and keep everything secure and private.",
-    "pick_language": "Choose your language to begin",
-    "name_to_call": "What name would you like me to call you?",
-    "consent_header": "Acknowledgement & Consent",
-    "consent_text": "Please confirm by typing your full legal name that you authorize the State of Louisiana and its agents, including artificial intelligence agents, to verify the information you provide during this process. Under penalty of perjury, you certify that all information is true and correct to the best of your knowledge.",
-    "identity_header": "Identity Information (for verification)",
-    "first_name": "First Name (required)",
-    "last_name": "Last Name (required)",
-    "medicaid_id": "Medicaid ID (optional)",
-    "ssn4": "Social Security Number (last 4) (required)",
-    "dob": "Date of Birth (required)",
-    "send_code": "Send me a verification code",
-    "enter_code": "Enter the code sent to your phone",
-    "verify": "Verify",
-    "contact_on_file": "Contact Information on File",
-    "update_prompt": "What information would you like to update?",
-    "home_address": "Home Address",
-    "street": "Street",
-    "city": "City",
-    "state": "State",
-    "zip": "Zip",
-    "mailing_address": "Mailing Address (if different)",
-    "cell_phone": "Cell Phone Number",
-    "email": "Email Address",
-    "alt_phone": "Home/Alternate Phone Number",
-    "contact_pref_header": "How would you like us to contact you?",
-    "pref_text": "Text",
-    "pref_email": "Email",
-    "pref_phone": "Phone Call",
-    "upload_guidance_text": "Send me a text with upload instructions",
-    "upload_guidance_email": "Send me an email with upload instructions",
-    "queue_caseworker": "Have a caseworker call me",
-    "verify_income_now_or_later": "Verify income now or get a reminder?",
-    "verify_now": "Verify Now",
-    "remind_me": "Remind Me Later",
-    "success_update": "Your updates were submitted securely to LDH. You’ll receive reminders before your deadline.",
-    "otp_sent": "A verification code was sent to your mobile number on file.",
-    "otp_invalid": "That code didn’t match. Please try again.",
-    "otp_valid": "Verified. Thanks!",
-    "security_note": "We use encrypted connections and one-time codes to protect your information.",
-    "dashboard_title": "LDH Caseworker Dashboard",
-    "needs_attention": "Needs Attention",
-    "new_updated": "New / Updated",
-    "ack_label": "Type your full legal name to acknowledge",
-    "language_saved": "Language preference saved.",
-    "name_saved": "Thanks, {name}!",
-    "ldh_post_ok": "LDH intake received (demo).",
-    "due_on": "Your renewal is due on: {date}",
-    "doc_list": "Common documents: last year’s tax return, two most recent pay stubs, employer letter if available."
-  },
-  "es": {
-    "app_title": "BenefitBridge para Medicaid de Luisiana"
-  },
-  "fr": {
-    "app_title": "BenefitBridge pour Medicaid de Louisiane"
-  },
-  "vi": {
-    "app_title": "BenefitBridge cho Medicaid Louisiana"
-  },
-  "ar": {
-    "app_title": "منفعة بريدج لبرنامج ميديكيد لويزيانا"
-  },
-  "zh": {
-    "app_title": "路易斯安那州医疗补助 BenefitBridge"
-  },
-  "tl": {
-    "app_title": "BenefitBridge para sa Louisiana Medicaid"
-  }
+  "languages": [
+    "English",
+    "Spanish",
+    "French",
+    "Vietnamese",
+    "Arabic",
+    "Chinese",
+    "Tagalog"
+  ]
 }
