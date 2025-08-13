@@ -1,0 +1,11 @@
+template_key,language,text
+opt_in_confirm,en,LDH Update: We received your contact info. Your renewal is due {due_date}. Reply HELP for assistance.
+opt_in_confirm,es,Actualización LDH: Recibimos su información de contacto. Su renovación vence el {due_date}. Responda AYUDA para asistencia.
+t_minus_14,en,Reminder: Your Medicaid renewal is due in 14 days. Need help? Reply HELP.
+t_minus_14,es,Recordatorio: Su renovación de Medicaid vence en 14 días. ¿Necesita ayuda? Responda AYUDA.
+t_minus_7,en,Heads-up: 7 days until your Medicaid renewal deadline. Reply DOCS for guidance.
+t_minus_7,es,Aviso: Faltan 7 días para su fecha límite de renovación. Responda DOCUMENTOS para ayuda.
+t_minus_3,en,3 days left to complete your Medicaid renewal. Reply HELP to talk with someone.
+t_minus_3,es,Quedan 3 días para completar su renovación de Medicaid. Responda AYUDA para hablar con alguien.
+t_minus_1,en,"Final reminder: Your renewal is due tomorrow. If submitted, you’re all set."
+t_minus_1,es,"Último recordatorio: Su renovación vence mañana. Si ya envió, todo está listo."
